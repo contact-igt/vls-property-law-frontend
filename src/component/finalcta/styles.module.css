@@ -1,0 +1,557 @@
+.finalCtaSec {
+  background: linear-gradient(165deg, #b20a0a 0%, #4c0505 48%, #050505 100%);
+  color: #fff;
+  padding: 100px 0 120px;
+  position: relative;
+  z-index: 2;
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+}
+
+/* Decorative overlay for depth */
+.finalCtaSec::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.08), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(178, 10, 10, 0.3), transparent 50%);
+  pointer-events: none;
+}
+
+.ctaContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.leftContent {
+  color: #fff;
+  animation: fadeInUp 0.8s ease-out;
+  width: 100%;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 28px;
+  backdrop-filter: blur(10px);
+}
+
+.leftContent h2 {
+  font-size: 56px;
+  line-height: 1.1;
+  font-weight: 800;
+  margin: 0 0 20px 0;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.leftContent h2 span {
+  color: #ffd6d6;
+}
+
+.leftContent p {
+  font-size: 22px;
+  line-height: 1.5;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.92);
+  max-width: 540px;
+}
+
+.ctaAction {
+  margin-top: 32px;
+}
+
+.ctaAction button {
+  background: #fff !important;
+  color: #b20a0a !important;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.22);
+}
+
+/* Form Indicator */
+.formIndicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 32px;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  max-width: fit-content;
+}
+
+.formIndicator span {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.arrowIcon {
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+/* Trust Badges */
+.trustBadges {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 40px;
+  position: relative;
+  z-index: 3;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  touch-action: manipulation;
+}
+
+@media (hover: hover) {
+  .badge:hover {
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateY(-2px);
+  }
+}
+
+.badge svg {
+  flex-shrink: 0;
+}
+
+.badge strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 2px;
+  color: #fff;
+}
+
+.badge span {
+  display: block;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.3;
+}
+
+/* Right Form Section */
+.rightForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  width: 100%;
+  min-width: 0;
+  position: relative;
+  z-index: 4;
+}
+
+.formCard {
+  width: 100%;
+  max-width: 520px;
+  background: #fff;
+  padding: 32px;
+  border-radius: 20px;
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+  box-sizing: border-box;
+}
+
+.ctaFormShell form,
+.formCard :global(form) {
+  width: 100% !important;
+  max-width: 100% !important;
+  border-radius: 16px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+  .ctaContent {
+    gap: 50px;
+  }
+
+  .leftContent h2 {
+    font-size: 50px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .leftContent h2 {
+    font-size: 44px;
+  }
+
+  .leftContent p {
+    font-size: 20px;
+  }
+  
+  .trustBadges {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .badge {
+    padding: 16px;
+  }
+
+  .badge strong {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 991px) {
+  .finalCtaSec {
+    padding: 70px 0 90px;
+  }
+
+  .ctaContent {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .leftContent {
+    max-width: 100%;
+    text-align: left;
+    animation: none;
+  }
+
+  .leftContent h2 {
+    font-size: 38px;
+    line-height: 1.15;
+  }
+
+  .leftContent p {
+    max-width: 100%;
+    font-size: 19px;
+  }
+
+  .ctaAction {
+    max-width: 420px;
+  }
+
+  .formIndicator {
+    max-width: 100%;
+    justify-content: flex-start;
+  }
+
+  .trustBadges {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 100%;
+    gap: 12px;
+  }
+
+  .badge {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 14px;
+  }
+
+  .rightForm {
+    justify-content: center;
+    animation: none;
+  }
+
+  .formCard {
+    max-width: 100%;
+    padding: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .finalCtaSec {
+    padding: 50px 0 60px;
+    overflow-x: hidden;
+  }
+
+  .ctaContent {
+    gap: 35px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .leftContent,
+  .rightForm {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ctaAction {
+    max-width: 100%;
+  }
+
+  .ctaAction button {
+    width: 100%;
+    min-width: 0;
+    white-space: normal;
+  }
+
+  .leftContent h2 {
+    font-size: 30px;
+    line-height: 1.25;
+    max-width: 100%;
+    margin-bottom: 14px;
+  }
+
+  .leftContent h2 span {
+    display: inline;
+  }
+
+  .leftContent p {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .eyebrow {
+    font-size: 13px;
+    padding: 8px 14px;
+    gap: 8px;
+  }
+
+  .formIndicator {
+    padding: 14px 18px;
+    margin-top: 28px;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .formIndicator span {
+    font-size: 15px;
+  }
+
+  .trustBadges {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 32px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .badge {
+    flex-direction: row;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 12px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .badge strong {
+    font-size: 15px;
+  }
+
+  .badge span {
+    font-size: 13px;
+  }
+
+  .formCard {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding: 18px;
+    border-radius: 16px;
+  }
+
+  .ctaFormShell {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .ctaFormShell form,
+  .formCard :global(form) {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0;
+    padding: 22px 18px !important;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .finalCtaSec {
+    padding: 40px 0 50px;
+  }
+
+  .ctaContent {
+    gap: 30px;
+  }
+
+  .leftContent h2 {
+    font-size: 25px;
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+
+  .leftContent p {
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  .eyebrow {
+    font-size: 12px;
+    padding: 7px 12px;
+    gap: 6px;
+    margin-bottom: 18px;
+  }
+
+  .eyebrow svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .formIndicator {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: left;
+    padding: 12px 16px;
+    margin-top: 20px;
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .formIndicator span {
+    font-size: 14px;
+    line-height: 1.4;
+  }
+
+  .formIndicator svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+
+  .trustBadges {
+    margin-top: 24px;
+    gap: 8px;
+  }
+
+  .badge {
+    gap: 10px;
+    padding: 12px 14px;
+  }
+
+  .badge svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .badge strong {
+    font-size: 14px;
+  }
+
+  .badge span {
+    font-size: 12px;
+  }
+
+  .formCard {
+    padding: 14px;
+    border-radius: 14px;
+  }
+
+  .ctaFormShell form,
+  .formCard :global(form) {
+    padding: 20px 14px !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .finalCtaSec {
+    padding: 35px 0 45px;
+  }
+
+  .leftContent h2 {
+    font-size: 23px;
+    line-height: 1.3;
+  }
+
+  .leftContent p {
+    font-size: 15px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    padding: 6px 10px;
+  }
+
+  .formIndicator {
+    padding: 10px 14px;
+    margin-top: 18px;
+  }
+
+  .formIndicator span {
+    font-size: 13px;
+  }
+
+  .trustBadges {
+    margin-top: 20px;
+  }
+
+  .badge {
+    padding: 10px 12px;
+  }
+
+  .badge strong {
+    font-size: 13px;
+  }
+
+  .badge span {
+    font-size: 11px;
+  }
+
+  .formCard {
+    padding: 10px;
+    border-radius: 12px;
+  }
+
+  .ctaFormShell form,
+  .formCard :global(form) {
+    padding: 18px 12px !important;
+  }
+}

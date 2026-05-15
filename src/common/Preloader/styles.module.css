@@ -1,0 +1,50 @@
+.preloader_container {
+  position: fixed;
+  inset: 0;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+/* Wrapper */
+.loader_wrapper {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Rotating Ring */
+.loader_circle {
+  position: absolute;
+  width: 130px;
+  height: 130px;
+  border: 4px solid #b20a0a;
+  /* gold color */
+  border-top-color: transparent;
+  /* cut opening */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Logo Size */
+.loader_logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+/* Spin Animation */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}

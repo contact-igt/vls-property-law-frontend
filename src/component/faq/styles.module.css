@@ -1,0 +1,39 @@
+.faqsec {
+    background-color: #000;
+    color: #ffff;
+}
+
+.faquestion button {
+    font-size: 20px;
+}
+
+.faqanswer {
+    font-size: 18px;
+}
+
+
+@media (width < 768px) {
+
+    .faquestion button {
+        font-size: 18px;
+    }
+
+    .faqanswer {
+        font-size: 16px;
+    }
+
+}
+
+
+@media (width < 576px) {
+
+
+    .faquestion button {
+        font-size: 16px;
+    }
+
+    .faqanswer {
+        font-size: 14px;
+    }
+
+}

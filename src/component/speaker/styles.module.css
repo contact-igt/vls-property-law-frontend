@@ -1,0 +1,153 @@
+.speakersec {
+  background-color: #fff;
+  color: #000;
+}
+
+.speakercard {
+  background-color: #f2f2f2;
+  border-radius: 20px;
+  max-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+}
+
+.speakerinfo {
+  padding: 50px;
+  margin-top: 0px;
+}
+.speakerimg {
+  height: 420px;
+  overflow: hidden;
+  object-fit: contain;
+  display: flex;
+  align-items: flex-end;
+}
+
+.speakerimg img {
+  height: 470px;
+  width: 100%;
+  object-fit: contain;
+  margin-bottom: 15px;
+}
+.speakerinfo h3 {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.speakerinfo h4 {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 15px 0px;
+}
+
+.speakerinfo h5 {
+  color: #959595;
+  font-size: 15px;
+}
+
+.speakerinfo p {
+  margin-top: 30px;
+}
+
+@media (max-width: 1400px) {
+  .speakerinfo {
+    padding: 40px;
+  }
+  .speakerinfo h3 {
+    font-size: 30px;
+  }
+  .speakerimg {
+    height: 400px;
+  }
+  .speakerimg img {
+    height: 440px;
+    margin-bottom: 0 !important;
+  }
+}
+
+@media (max-width: 1200px) {
+  .speakerinfo {
+    padding: 35px 30px;
+  }
+  .speakerinfo h3 {
+    font-size: 26px;
+  }
+  .speakerinfo h4 {
+    font-size: 17px;
+  }
+  .speakerimg {
+    height: 415px;
+  }
+  .speakerimg img {
+    height: 480px;
+        margin-bottom: 0 !important;
+  }
+}
+@media (max-width: 992px) {
+  .speakercard {
+    flex-direction: column;
+    max-height: unset;
+  }
+  .speakerinfo {
+    padding: 30px 25px;
+  }
+  .speakerinfo h3 {
+    font-size: 24px;
+  }
+  .speakerinfo h4 {
+    font-size: 16px;
+  }
+  .speakerimg {
+    height: 320px;
+  }
+  .speakerimg img {
+    height: 360px;
+  }
+}
+
+@media (max-width: 768px) {
+  .speakerinfo {
+    padding: 25px 20px;
+    text-align: center;
+  }
+  .speakerinfo h3 {
+    font-size: 22px;
+  }
+  .speakerinfo h4 {
+    font-size: 15px;
+  }
+  .speakerimg {
+    height: 300px;
+  }
+  .speakerimg img {
+    height: 340px;
+    margin-bottom: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .speakerinfo {
+    padding: 20px 15px;
+    text-align: center;
+  }
+  .speakerinfo h3 {
+    font-size: 20px;
+  }
+  .speakerinfo h4 {
+    font-size: 14px;
+  }
+  .speakerinfo p {
+    margin-top: 15px;
+    font-size: 14px;
+  }
+  .speakerimg {
+    height: 260px;
+  }
+  .speakerimg img {
+    height: 300px;
+    margin-bottom: 8px;
+  }
+}

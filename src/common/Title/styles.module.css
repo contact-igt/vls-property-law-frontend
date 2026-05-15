@@ -1,0 +1,42 @@
+.commntitle h4 {
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.commntitle p {
+    font-size: 20px;
+    margin: 20px 0px
+}
+
+.commntitle span {
+    color: #b20a0a;
+}
+
+
+@media (width < 1200px) {
+    .commntitle h4 {
+        font-size: 35px;
+    }
+
+    .commntitle p{
+        font-size: 18px;
+    }
+
+    
+}
+
+
+@media (width < 768px) {
+
+    .commntitle h4{
+        font-size: 26px;
+    }
+
+    .commntitle p{
+        font-size: 16px;
+    }
+    .commntitle{
+        text-align: center;
+    }
+    
+}

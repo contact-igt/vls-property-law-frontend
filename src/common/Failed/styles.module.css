@@ -1,0 +1,48 @@
+.failedWrapper {
+    width: 400px;
+    padding: 30px;
+    text-align: center;
+
+}
+
+.failedWrapper>p {
+    margin: 0;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+    text-align: center
+}
+
+.description {
+    font-size: 18;
+    font-weight: 500;
+    color: #3a3a3a;
+    padding: 10px 0px;
+    text-align: center;
+}
+
+.description2 {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 3px 6px;
+
+}
+
+.failedWrapper button,
+.failedWrapper button:hover {
+    margin-top: 20px;
+    background-color: #b20a0a !important;
+
+}
+
+
+
+@media (width < 576px) {
+    .failedWrapper {
+        width: 100%;
+    }
+
+}

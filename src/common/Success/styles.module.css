@@ -1,0 +1,49 @@
+.successWrapper {
+    width: 400px;
+    padding: 30px;
+    text-align: center;
+
+
+}
+
+.successWrapper>p {
+    margin: 0;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #000;
+    text-align: center
+}
+
+.description {
+    font-size: 17px;
+    font-weight: 500;
+    color: #3a3a3a;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+.description2 {
+    font-size: 15px;
+    font-weight: 500;
+    padding: 3px 6px;
+
+
+}
+
+.successWrapper button,
+.successWrapper button:hover {
+    margin-top: 20px;
+    background-color: #b20a0a !important;
+
+}
+
+
+@media (width < 576px) {
+
+    .successWrapper {
+        width: 100%;
+    }
+}

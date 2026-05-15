@@ -1,0 +1,235 @@
+/* .bannertitle p {
+    color: #ffff !important;
+    text-align: start;
+}
+
+.bannertitle h4 {
+    text-align: start;
+}
+
+.pointwise h5 {
+
+    font-size: 18px;
+    margin: 0px;
+    width: 600px;
+}
+
+.datetime {
+    background-color: #b20a0a;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+.bannersec {
+    background: url("/assets/home/banner-img.jpg");
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #ffff;
+}
+
+.bannersec {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    color: #ffff;
+    overflow: hidden;
+}
+
+.bgimg {
+    object-fit: cover;
+    z-index: -1;
+}
+
+@media (width < 1200px) {
+
+    .pointwise h5 {
+        width: 100%;
+        font-size: 16px;
+    }
+
+}
+
+@media (width < 768px) {
+
+    .datetime h6 {
+        font-size: 14px;
+    }
+} */
+
+
+/* src/pageComponents/Home/styles.module.css */
+
+.bannersec {
+  position: relative;
+  overflow: hidden;
+  min-height: 60vh; /* adjust as needed */
+  display: flex;
+  align-items: center;
+  color: #fff;
+  padding: 3rem 0;
+}
+
+/* wrapper for next/image fill */
+.bgWrap {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-color: #111; /* fallback while image loads */
+}
+
+/* ensure image covers and keeps aspect */
+.bgimg {
+  object-fit: cover;
+  object-position: center;
+  filter: none;
+}
+
+/* Content title block */
+.bannertitle p {
+  color: #ffffff !important;
+  text-align: left; /* replaced 'start' with well-supported value */
+}
+
+.bannertitle h4 {
+  text-align: left;
+}
+
+/* point list items */
+.pointwise h5 {
+  font-size: 18px;
+  margin: 0;
+  max-width: 600px;
+  line-height: 1.35;
+}
+
+/* small date/time capsule */
+.datetime {
+  background-color: #b20a0a;
+  padding: 12px 16px;
+  border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* small tag above the hero title */
+.herotag {
+  display: inline-block;
+  background: rgba(178,10,10,0.95);
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* points container */
+.bannerpoint {
+  display: block;
+  margin-top: 1.25rem;
+}
+
+/* vertical list item for each point */
+.pointItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.iconWrap {
+  margin-top: 6px; /* nudge icon to align with multiline text */
+  color: #b20a0a;
+  min-width: 26px;
+}
+
+.pointText {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 0;
+  max-width: 600px;
+  line-height: 1.4;
+}
+
+/* compact hero stats row shown under the title */
+.heroStats {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+  margin-top: 18px;
+  width: 100%;
+}
+
+.heroStatItem {
+  flex: 1 1 0;
+  min-height: 68px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.heroStatItem:last-child {
+  border-right: none;
+}
+
+.statNumber {
+  color: #fff;
+  font-weight: 900;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.statLabel {
+  color: #fff;
+  opacity: 0.95;
+  font-size: 13px;
+  margin-top: 6px;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* responsive tweaks */
+@media (max-width: 1199px) {
+  .pointwise h5 {
+    max-width: 100%;
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .datetime h6 {
+    font-size: 14px;
+  }
+
+  .bannersec {
+    padding: 2rem 0;
+    min-height: 50vh;
+  }
+
+  .pointwise h5 {
+    font-size: 15px;
+  }
+
+  .heroStats {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .heroStatItem {
+    min-height: unset;
+    padding: 8px 10px;
+  }
+
+  .statNumber {
+    font-size: 18px;
+  }
+}

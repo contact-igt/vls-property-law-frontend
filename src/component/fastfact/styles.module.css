@@ -1,0 +1,102 @@
+.factsec {
+    color: #000 !important;
+    background-color: #e8e8e0;
+    padding: 60px 0;
+}
+
+.mainTitle {
+    font-size: 36px;
+    font-weight: 700;
+    color: #b20a0a;
+    margin-bottom: 16px;
+}
+
+.mainSubtitle {
+    font-size: 16px;
+    color: #444;
+    max-width: 900px;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+.factpointcard {
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    background-color: #fff;
+    padding: 30px 20px;
+    border-radius: 10px;
+    transition: all 0.5s ease-in-out;
+    overflow: hidden;
+    cursor: pointer;
+    color: #000 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    height: 100%;
+}
+
+.cardIcon {
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.factpointcard:hover {
+    transform: scale(1.08);
+    transition: all 0.5s ease-in-out;
+}
+
+
+.factpointcard p {
+    font-size: 16px;
+    font-weight: 500;
+     margin-bottom: 0 !important;
+}
+
+.cardTitle {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: #000;
+}
+
+.cardDesc {
+    font-size: 14px;
+    color: #555;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.problemSubtitle {
+    font-size: 16px;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+.problemSubheading {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 14px;
+}
+
+.factimg {
+    height: 100%;
+}
+
+
+.factimg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+
+}
+
+@media (width < 576px) {
+
+    .factpointcard {
+        font-size: 14px;
+    }
+
+}

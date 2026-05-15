@@ -1,0 +1,49 @@
+.whycouresec {
+    background-color: #f9f2f2;
+    color: #000 !important;
+}
+
+.course h4 {
+    color: #000;
+}
+
+.course p {
+    font-size: 18px;
+    line-height: 36px;
+    color: #000;
+}
+
+.courseimg{
+    width: 100%;
+        height: 440px;
+}
+
+.courseimg img {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+}
+
+@media (width<1200px){
+    .courseimg{
+        width: 100%;
+    height: 100%;
+}
+}
+
+@media (width < 992px) {
+    .courseimg{
+    width: 100%;
+    height: 100%;
+}
+}
+@media (width < 768px) {
+
+    .course p{
+        font-size: 16px;
+        text-align: start;
+    }
+    .course{
+        text-align: center;
+    }
+}
