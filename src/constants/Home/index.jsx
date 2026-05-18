@@ -151,15 +151,15 @@ export const HomePage = {
 
   speaker: {
     image: "/assets/owner/mr-siva-kumar-backdrop.svg",
-    name: "Dr. Sivakumar Sivaprakasam",
+    name: "Dr. Sivakumar",
     Education: "B.Sc., M.L., Ph.D (Law)",
     position: "Lawyer, Chennai High Court",
     about:
-      "Dr. Sivakumar Sivaprakasam has successfully trained over 250 aspirants for Tamil Nadu Judicial Services and over 1200 candidates for Tamil Nadu Civil Services. He has guided IAS, IPS, and IFS candidates, with many achieving top ranks. He has mentored candidates in law, economy, and public administration subjects for UPSC and TNPSC exams since 2003. His contributions extend to founding multiple IAS academies.",
+      "Dr. Sivakumar has successfully trained over 250 aspirants for Tamil Nadu Judicial Services and over 1200 candidates for Tamil Nadu Civil Services. He has guided IAS, IPS, and IFS candidates, with many achieving top ranks. He has mentored candidates in law, economy, and public administration subjects for UPSC and TNPSC exams since 2003. His contributions extend to founding multiple IAS academies.",
   },
   faculty: {
     eyebrow: "Your Faculty",
-    title: "Dr. Sivakumar Sivaprakasam",
+    title: "Dr. Sivakumar",
     subtitle: "PhD in Law · Academic Head, VLS Law Academy",
     image: "/assets/owner/mr-siva-kumar-backdrop.svg",
     credentials: [

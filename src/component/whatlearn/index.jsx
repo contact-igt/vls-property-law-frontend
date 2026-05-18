@@ -71,16 +71,33 @@ const WhatLearn = ({ learndata }) => {
       ];
 
   const sectionRef = useRef(null);
+  const cardRefs = useRef([]);
+  const cardsContainerRef = useRef(null);
+  const cardScrollEnabled = useRef(false);
+  const activeTouchCardRef = useRef(null);
+  const lastTouchY = useRef(0);
+  const releasedToPageRef = useRef(false);
   const [currentCard, setCurrentCard] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(0);
   const [isLocked, setIsLocked] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
-  const touchStartY = useRef(0);
-  const touchStartX = useRef(0);
+
+  const getMaxScrollTop = (el) => Math.max(0, el.scrollHeight - el.clientHeight);
+  const isAtTop = (el) => el.scrollTop <= 0;
+  const isAtBottom = (el) => el.scrollTop >= getMaxScrollTop(el) - 1;
+  const canScrollCard = (el, deltaY) => {
+    if (!el || getMaxScrollTop(el) <= 0) return false;
+    if (deltaY < 0) return !isAtTop(el);
+    if (deltaY > 0) return !isAtBottom(el);
+    return false;
+  };
 
   // Navigate to specific card
   const goToCard = (index) => {
     if (index >= 0 && index < days.length && !isLocked) {
       setCurrentCard(index);
+      requestAnimationFrame(() => {
+        if (cardRefs.current[index]) cardRefs.current[index].scrollTop = 0;
+      });
       setIsLocked(true);
       setTimeout(() => setIsLocked(false), 600);
     }
@@ -91,14 +108,34 @@ const WhatLearn = ({ learndata }) => {
     const handleWheel = (e) => {
       if (!sectionRef.current) return;
 
-      const rect = sectionRef.current.getBoundingClientRect();
-      
-      // More sensitive detection - triggers when section crosses viewport center
-      const isInSection = 
-        rect.top < window.innerHeight * 0.5 && 
-        rect.bottom > window.innerHeight * 0.5;
+      // Card scroll only active when IntersectionObserver confirms container is fully visible
+      if (!cardScrollEnabled.current) return;
 
-      if (!isInSection) return;
+      const activeCard = cardRefs.current[currentCard];
+      const wheelStartedInCard = activeCard?.contains(e.target);
+
+      if (wheelStartedInCard && activeCard) {
+        if (canScrollCard(activeCard, e.deltaY)) {
+          e.preventDefault();
+          e.stopPropagation();
+          activeCard.scrollTop += e.deltaY;
+          return;
+        }
+
+        const cardBoundaryUp = isAtTop(activeCard) && e.deltaY < 0;
+        const cardBoundaryDown = isAtBottom(activeCard) && e.deltaY > 0;
+        const canPageUp = cardBoundaryUp && currentCard > 0;
+        const canPageDown = cardBoundaryDown && currentCard < days.length - 1;
+
+        if (canPageUp || canPageDown) {
+          e.preventDefault();
+          e.stopPropagation();
+
+          if (isLocked) return;
+          goToCard(canPageDown ? currentCard + 1 : currentCard - 1);
+          return;
+        }
+      }
 
       // Check if we can exit the section
       const canExitUp = currentCard === 0 && e.deltaY < 0;
@@ -134,87 +171,124 @@ const WhatLearn = ({ learndata }) => {
   // Handle touch events for mobile
   useEffect(() => {
     const handleTouchStart = (e) => {
-      touchStartY.current = e.touches[0].clientY;
-      touchStartX.current = e.touches[0].clientX;
-      setIsDragging(false);
+      const activeCard = cardRefs.current[currentCard];
+      if (!activeCard || !activeCard.contains(e.target)) return;
+
+      e.stopPropagation();
+      activeTouchCardRef.current = activeCard;
+      lastTouchY.current = e.touches[0].clientY;
+      releasedToPageRef.current = false;
     };
 
     const handleTouchMove = (e) => {
-      if (!sectionRef.current || isLocked) return;
+      const activeCard = activeTouchCardRef.current;
+      if (!activeCard || releasedToPageRef.current) return;
 
-      const touchCurrentY = e.touches[0].clientY;
-      const touchCurrentX = e.touches[0].clientX;
-      
-      const diffY = Math.abs(touchStartY.current - touchCurrentY);
-      const diffX = Math.abs(touchStartX.current - touchCurrentX);
+      const currentY = e.touches[0].clientY;
+      const deltaY = lastTouchY.current - currentY; // positive = swipe up / scroll down
 
-      // Determine if this is a vertical swipe (not horizontal)
-      if (diffY > diffX && diffY > 10) {
-        setIsDragging(true);
-      }
-    };
+      if (Math.abs(deltaY) < 1) return;
 
-    const handleTouchEnd = (e) => {
-      if (!sectionRef.current || isLocked) {
-        setIsDragging(false);
-        return;
-      }
+      const atTopBoundary = isAtTop(activeCard) && deltaY < 0;
+      const atBottomBoundary = isAtBottom(activeCard) && deltaY > 0;
 
-      const touchEndY = e.changedTouches[0].clientY;
-      const diff = touchStartY.current - touchEndY;
+      if (atTopBoundary || atBottomBoundary) {
+        const canPageUp = atTopBoundary && currentCard > 0;
+        const canPageDown = atBottomBoundary && currentCard < days.length - 1;
 
-      const rect = sectionRef.current.getBoundingClientRect();
-      // Updated detection - same as wheel event
-      const isInSection = 
-        rect.top < window.innerHeight * 0.5 && 
-        rect.bottom > window.innerHeight * 0.5;
+        if (canPageUp || canPageDown) {
+          e.preventDefault();
+          e.stopPropagation();
+          releasedToPageRef.current = true;
+          activeTouchCardRef.current = null;
 
-      if (!isInSection) {
-        setIsDragging(false);
-        return;
-      }
-
-      // Check exit conditions
-      const canExitUp = currentCard === 0 && diff < 0;
-      const canExitDown = currentCard === days.length - 1 && diff > 0;
-
-      if (canExitUp || canExitDown) {
-        // Allow page scroll, don't interfere
-        setIsDragging(false);
-        return;
-      }
-
-      // Dynamic threshold based on screen size (10% of screen height)
-      const swipeThreshold = window.innerHeight * 0.1;
-
-      if (Math.abs(diff) > swipeThreshold) {
-        if (diff > 0 && currentCard < days.length - 1) {
-          // Swipe up (next card)
-          goToCard(currentCard + 1);
-        } else if (diff < 0 && currentCard > 0) {
-          // Swipe down (previous card)
-          goToCard(currentCard - 1);
+          if (!isLocked) {
+            goToCard(canPageDown ? currentCard + 1 : currentCard - 1);
+          }
+          return;
         }
+
+        releasedToPageRef.current = true;
+        activeTouchCardRef.current = null;
+        return;
       }
 
-      setIsDragging(false);
+      e.preventDefault();
+      e.stopPropagation();
+      activeCard.scrollTop += deltaY;
+      lastTouchY.current = currentY;
     };
 
-    const section = sectionRef.current;
-    if (section) {
-      section.addEventListener("touchstart", handleTouchStart, { passive: true });
-      section.addEventListener("touchmove", handleTouchMove, { passive: true });
-      section.addEventListener("touchend", handleTouchEnd, { passive: true });
+    const resetTouchLock = () => {
+      activeTouchCardRef.current = null;
+      releasedToPageRef.current = false;
+    };
+
+    const container = cardsContainerRef.current;
+    if (container) {
+      container.addEventListener("touchstart", handleTouchStart, { passive: true });
+      container.addEventListener("touchmove", handleTouchMove, { passive: false });
+      container.addEventListener("touchend", resetTouchLock, { passive: true });
+      container.addEventListener("touchcancel", resetTouchLock, { passive: true });
+      container.addEventListener("pointerup", resetTouchLock);
+      container.addEventListener("pointercancel", resetTouchLock);
     }
 
     return () => {
-      if (section) {
-        section.removeEventListener("touchstart", handleTouchStart);
-        section.removeEventListener("touchmove", handleTouchMove);
-        section.removeEventListener("touchend", handleTouchEnd);
+      if (container) {
+        container.removeEventListener("touchstart", handleTouchStart);
+        container.removeEventListener("touchmove", handleTouchMove);
+        container.removeEventListener("touchend", resetTouchLock);
+        container.removeEventListener("touchcancel", resetTouchLock);
+        container.removeEventListener("pointerup", resetTouchLock);
+        container.removeEventListener("pointercancel", resetTouchLock);
       }
     };
-  }, [currentCard, isLocked, days.length, isDragging]);
+  }, [currentCard, days.length, isLocked]);
+
+  // Enable card scroll only when the container is 100% visible in the viewport
+  useEffect(() => {
+    const container = cardsContainerRef.current;
+    if (!container) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        cardScrollEnabled.current = entry.isIntersecting;
+      },
+      { threshold: 1.0 }
+    );
+
+    observer.observe(container);
+    return () => observer.disconnect();
+  }, []);
+
+  // Measure tallest card and sync container height so no card clips
+  useEffect(() => {
+    const updateHeight = () => {
+      const heights = cardRefs.current
+        .filter(Boolean)
+        .map((el) => el.scrollHeight);
+      const maxContentHeight = Math.max(...heights);
+      const maxViewportHeight = window.matchMedia("(max-width: 576px)").matches
+        ? window.innerHeight * 0.8
+        : window.matchMedia("(max-width: 991px)").matches
+          ? window.innerHeight * 0.7
+          : window.innerHeight * 0.72;
+      const nextHeight = Math.min(maxContentHeight, maxViewportHeight);
+
+      if (nextHeight > 0) setContainerHeight(nextHeight);
+    };
+
+    updateHeight();
+
+    const observer = new ResizeObserver(updateHeight);
+    cardRefs.current.filter(Boolean).forEach((el) => observer.observe(el));
+    window.addEventListener("resize", updateHeight);
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", updateHeight);
+    };
+  }, [days.length]);
 
   return (
     <section className={styles.learnsec} ref={sectionRef}>
@@ -238,7 +312,11 @@ const WhatLearn = ({ learndata }) => {
           </div>
 
           <div className={styles.rightContent}>
-          <div className={styles.cardsContainer}>
+          <div
+            className={styles.cardsContainer}
+            ref={cardsContainerRef}
+            style={containerHeight ? { height: containerHeight } : undefined}
+          >
             <div 
               className={styles.cardsWrapper}
               style={{
@@ -251,7 +329,10 @@ const WhatLearn = ({ learndata }) => {
                   key={i}
                   className={styles.cardSlide}
                 >
-                  <div className={styles.card}>
+                  <div
+                    className={styles.card}
+                    ref={(el) => { cardRefs.current[i] = el; }}
+                  >
                     <div className={styles.cardHeader}>
                       <span className={styles.badge}>{d.day}</span>
                       <h3>{d.title}</h3>
