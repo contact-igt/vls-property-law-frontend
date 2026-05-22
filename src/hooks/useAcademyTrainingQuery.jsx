@@ -1,22 +1,19 @@
-import { AcademyTrainingApi } from "@/service/AcademyTraining";
+import { PropertyLawApi } from "@/service/AcademyTraining";
 import { useSnackbar } from "notistack";
-import { useMutation, useQueryClient } from "react-query";
+import { useMutation } from "react-query";
 
-const AcademyApiData = new AcademyTrainingApi();
+const propertyLawApi = new PropertyLawApi();
 
-export const AcademyRegisterQuery = () => {
-  const queryClient = useQueryClient();
+export const PropertyLawRegisterQuery = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   return useMutation(
     async ({ value }) => {
-      return await AcademyApiData.AcademyTrainingRegister(value);
+      return await propertyLawApi.PropertyLawRegister(value);
     },
     {
-      onSuccess: (data) => {
+      onSuccess: () => {
         enqueueSnackbar("Registered successfully", { variant: "success" });
-        queryClient.invalidateQueries(["Academy Register"]);
-        return data;
       },
       onError: (error) => {
         const message =

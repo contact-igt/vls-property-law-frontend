@@ -5,7 +5,8 @@ export const _axios = async (
   url,
   body,
   contentType = "application/json",
-  params = {}
+  params = {},
+  extraHeaders = {}
 ) => {
   const APISERVER =
     process.env.NEXT_PUBLIC_API_SERVER === "production"
@@ -26,6 +27,7 @@ export const _axios = async (
       params,
       headers: {
         ...(isFormData ? {} : { "Content-Type": contentType }),
+        ...extraHeaders,
       },
     });
 
