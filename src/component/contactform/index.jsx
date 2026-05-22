@@ -71,7 +71,7 @@ const ContactForm = ({
     const resp = await fetch("/api/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: HomePage?.razorpay?.amount }),
+      body: JSON.stringify({ amount: 1 }),
     });
 
     const order = await resp.json();
@@ -144,7 +144,7 @@ const ContactForm = ({
         // );
 
 
-        // await registerUserToDB(apiPayload);
+        await registerUserToDB(apiPayload);
 
         const params = new URLSearchParams();
         Object.keys(apiPayload).forEach((key) =>
