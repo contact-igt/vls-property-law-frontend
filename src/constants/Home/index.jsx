@@ -42,12 +42,7 @@ export const HomePage = {
       id: 5,
       value: "₹499 (Early access)",
       icon: "hand-coins",
-    },
-    {
-      id: 6,
-      value: "Recording included",
-      icon: "mic",
-    },
+    }
   ],
   promise: {
     desc: "You studied the law. But when it comes to drafting, filings, or handling your first client—do you feel unsure where to start?",
@@ -184,7 +179,7 @@ export const HomePage = {
       id: 2,
       question: "Is the session live or recorded?",
       answer:
-        "The session is conducted live, and recording access will also be provided.",
+        "The session is conducted live.",
     },
     {
       id: 3,

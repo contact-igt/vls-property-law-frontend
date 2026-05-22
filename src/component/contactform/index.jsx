@@ -9,7 +9,7 @@ import { HomePage } from "@/constants/Home";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Popup } from "@/common/Popup";
-import { AcademyRegisterQuery } from "@/hooks/useAcademyTrainingQuery";
+import { PropertyLawRegisterQuery } from "@/hooks/useAcademyTrainingQuery";
 
 const ContactForm = ({
   ipAddress,
@@ -17,7 +17,7 @@ const ContactForm = ({
   className = "",
 }) => {
   const router = useRouter();
-  const { mutate: registerMutate } = AcademyRegisterQuery();
+  const { mutate: registerMutate } = PropertyLawRegisterQuery();
   const [instructionOpen, setInstructionOpen] = useState(false);
   const [agree, setAgree] = useState(false);
   const [processing, setProcessing] = useState(false);
@@ -71,7 +71,7 @@ const ContactForm = ({
     const resp = await fetch("/api/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: HomePage?.razorpay?.amount }),
+      body: JSON.stringify({ amount: 1 }),
     });
 
     const order = await resp.json();
@@ -83,6 +83,7 @@ const ContactForm = ({
 
     const options = {
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+      // key: "rzp_test_Ss2NFtpJFLRAiw",
       amount: order.amount,
       currency: order.currency,
       name: formValues.name,
@@ -124,6 +125,7 @@ const ContactForm = ({
           payment_status: "paid",
           page_name: "property-law-masterclass",
           ip_address: ipAddress || "",
+          client_key: "vls_law",
           utm_source: getUTM("utm_source"),
           utm_medium: getUTM("utm_medium"),
           utm_campaign: getUTM("utm_campaign"),
@@ -142,7 +144,6 @@ const ContactForm = ({
         // );
 
 
-        console.log("Registration Payload:", apiPayload);
         // await registerUserToDB(apiPayload);
 
         const params = new URLSearchParams();
@@ -348,7 +349,7 @@ const ContactForm = ({
             </div>
 
             <div className={`mt-3 d-flex justify-content-center`}>
-              <p className={styles.bottomNote}>🔒 Secure Access · Recording Included</p>
+              <p className={styles.bottomNote}>🔒 Secure Access</p>
             </div>
         </form>
       </div>
