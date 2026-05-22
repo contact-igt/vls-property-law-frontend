@@ -14,8 +14,8 @@ export default async function handler(req, res) {
     
         // ----------------- Testing card detail ------------------
 
-    // const key_id = "rzp_test_SpYTsmqBs285kE";
-    // const secret = "VBtGpryYYV6sWKj7J8FMKwJH";
+    // const key_id="rzp_test_Ss2NFtpJFLRAiw";
+    // const secret="5mPlA2tiZUxTPd5sZ3zqT2Te";
 
     console.log("Create Order Request Body:", req.body);
     console.log("Key ID Exists:", !!key_id, key_id?.substring(0, 8));

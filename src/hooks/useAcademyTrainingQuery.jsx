@@ -2,9 +2,8 @@ import { PropertyLawApi } from "@/service/AcademyTraining";
 import { useSnackbar } from "notistack";
 import { useMutation } from "react-query";
 
-const propertyLawApi = new PropertyLawApi();
-
 export const PropertyLawRegisterQuery = () => {
+  const propertyLawApi = new PropertyLawApi();
   const { enqueueSnackbar } = useSnackbar();
 
   return useMutation(
