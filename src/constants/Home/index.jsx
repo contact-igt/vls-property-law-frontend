@@ -5,11 +5,11 @@ export const HomePage = {
       titlebold: "How Property Lawyers",
       title: "Actually Build Their Practice in Tamil Nadu",
       desc: "A practical 3-hour live masterclass for advocates who want to understand how property law practice works — from documents and disputes to clients, career opportunities, and specialization pathways.",
-      time: "June 6th, 2026",
+      time: "Saturday, June 6, 2026 • 10:00 AM – 1:00 PM IST",
     },
 
     points: [
-      { id: 1, desc: "June 6th, 2026" },
+      { id: 1, desc: "Saturday, June 6, 2026 • 10:00 AM – 1:00 PM IST" },
       { id: 2, desc: "Live Session" },
       { id: 3, desc: "3-Hour Intensive Session" },
       { id: 4, desc: "Tamil Nadu Practice Focused" },
@@ -18,7 +18,7 @@ export const HomePage = {
   fast_fact: [
     {
       id: 1,
-      value: "June 6th, 2026",
+      value: "Saturday, June 6, 2026 • 10:00 AM – 1:00 PM IST",
       icon: "calendar-clock",
     },
     {
