@@ -24,7 +24,7 @@ export default function Document() {
 
 
         {/* Google Tag Manager */}
-        <Script
+        {/* <Script
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -33,7 +33,7 @@ export default function Document() {
               })(window,document,'script','dataLayer','GTM-K4PLSSB2');`,
           }}
           strategy="lazyOnload"
-        />
+        /> */}
 
         <Script
           dangerouslySetInnerHTML={{
@@ -41,21 +41,21 @@ export default function Document() {
                      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
                      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
                      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-                     })(window, document, "clarity", "script", "twoosrzeg4");`,
+                     })(window, document, "clarity", "script", "wzlgdnsk8k");`,
           }}
           strategy="lazyOnload"
         />
         {/* End Google Tag Manager */}
       </Head>
       <body>
-        <noscript>
+        {/* <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-K4PLSSB2"
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
           ></iframe>
-        </noscript>
+        </noscript> */}
         <Main />
         <NextScript />
         {/* JS scripts */}
