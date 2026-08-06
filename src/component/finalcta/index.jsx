@@ -3,9 +3,13 @@ import { DynamicIcon } from "lucide-react/dynamic";
 import Button from "@/common/Button";
 import ContactForm from "@/component/contactform";
 import styles from "./styles.module.css";
+import { programConfig } from "@/constants/Home";
+import { isRegistrationOpen } from "@/utils/programStatus";
 
-const FinalCta = ({ ipAddress }) => {
+const FinalCta = ({ ipAddress, config = programConfig }) => {
   const formWrapRef = useRef(null);
+  const activeConfig = config || programConfig;
+  const isRegOpen = isRegistrationOpen(activeConfig);
 
   const scrollToFinalForm = () => {
     formWrapRef.current?.scrollIntoView({
@@ -21,7 +25,7 @@ const FinalCta = ({ ipAddress }) => {
           <div className={styles.leftContent}>
             <div className={styles.eyebrow}>
               <DynamicIcon name="scale" size={20} />
-              <span>Final Enrollment Call</span>
+              <span>{isRegOpen ? "Final Enrollment Call" : "Join the Waitlist"}</span>
             </div>
 
             <h2>
@@ -46,20 +50,24 @@ const FinalCta = ({ ipAddress }) => {
                   <span>Interactive session</span>
                 </div>
               </div>
-              <div className={styles.badge}>
-                <DynamicIcon name="calendar" size={20} />
-                <div>
-                  <strong>June 6, 2026</strong>
-                  <span>Save the date</span>
-                </div>
-              </div>
-              <div className={styles.badge}>
-                <DynamicIcon name="indian-rupee" size={20} />
-                <div>
-                  <strong>₹499 Only</strong>
-                  <span>Limited seats</span>
-                </div>
-              </div>
+              {isRegOpen && (
+                <>
+                  <div className={styles.badge}>
+                    <DynamicIcon name="calendar" size={20} />
+                    <div>
+                      <strong>{activeConfig?.date || "June 6, 2026"}</strong>
+                      <span>Save the date</span>
+                    </div>
+                  </div>
+                  <div className={styles.badge}>
+                    <DynamicIcon name="indian-rupee" size={20} />
+                    <div>
+                      <strong>₹{activeConfig?.fee ?? 499} Only</strong>
+                      <span>Limited seats</span>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 
@@ -69,6 +77,7 @@ const FinalCta = ({ ipAddress }) => {
                 ipAddress={ipAddress}
                 formId="final_cta_contact_form"
                 className={styles.ctaFormShell}
+                config={activeConfig}
               />
             </div>
           </div>

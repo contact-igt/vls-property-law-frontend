@@ -5,7 +5,8 @@ import styles from "./styles.module.css";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Title from "@/common/Title";
-import { HomePage } from "@/constants/Home";
+import { HomePage, programConfig } from "@/constants/Home";
+import { isRegistrationOpen } from "@/utils/programStatus";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { Popup } from "@/common/Popup";
@@ -15,13 +16,18 @@ const ContactForm = ({
   ipAddress,
   formId = "contact_form",
   className = "",
+  config = programConfig,
 }) => {
   const router = useRouter();
   const { mutate: registerMutate } = PropertyLawRegisterQuery();
   const [instructionOpen, setInstructionOpen] = useState(false);
   const [agree, setAgree] = useState(false);
   const [processing, setProcessing] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formValues, setFormValues] = useState(null);
+
+  const activeConfig = config || programConfig;
+  const isRegOpen = isRegistrationOpen(activeConfig);
 
   const getUTM = (key) => {
     if (typeof window === "undefined") return "";
@@ -31,6 +37,56 @@ const ContactForm = ({
       return "";
     }
   };
+
+  const getIsoDate = () => {
+    if (activeConfig?.classStartAt) {
+      return activeConfig.classStartAt.split("T")[0];
+    }
+    return "2026-06-06";
+  };
+
+  const handleWaitlistSubmit = async (values) => {
+    setIsSubmitting(true);
+    const waitlistPayload = {
+      name: values?.name || "",
+      email: values?.email || "",
+      mobile: `+91${values?.mobile || ""}`,
+      yearsOfPractice: values?.yearsOfPractice || "",
+      amount: 0,
+      programm_date: getIsoDate(),
+      razorpay_order_id: "",
+      razorpay_payment_id: "",
+      razorpay_signature: "",
+      payment_status: "waitlist",
+      captured: "",
+      page_name: activeConfig?.pageName || "property-law",
+      ip_address: ipAddress || "",
+      client_key: "vls_law",
+      utm_source: getUTM("utm_source"),
+      utm_medium: getUTM("utm_medium"),
+      utm_campaign: getUTM("utm_campaign"),
+      utm_term: getUTM("utm_term"),
+      utm_content: getUTM("utm_content"),
+    };
+
+    try {
+      await registerUserToDB(waitlistPayload);
+
+      const params = new URLSearchParams();
+      Object.keys(waitlistPayload).forEach((key) =>
+        params.append(key, waitlistPayload[key] ?? "")
+      );
+      await handleGoogleSheetForm(params);
+
+      await safeSetPaymentDetails(waitlistPayload);
+      router.replace("/thank-you");
+    } catch (err) {
+      console.error("Waitlist registration error:", err);
+      setIsSubmitting(false);
+      router.replace("/error");
+    }
+  };
+
   // ---------------- FORM ----------------
   const formik = useFormik({
     initialValues: {
@@ -59,6 +115,10 @@ const ContactForm = ({
     }),
 
     onSubmit: (values) => {
+      if (!isRegOpen) {
+        handleWaitlistSubmit(values);
+        return;
+      }
       setFormValues(values);
       setAgree(false);
       setInstructionOpen(true);
@@ -71,7 +131,7 @@ const ContactForm = ({
     const resp = await fetch("/api/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ amount: HomePage?.razorpay?.amount }),
+      body: JSON.stringify({ amount: activeConfig?.fee ?? HomePage?.razorpay?.amount }),
     });
 
     const order = await resp.json();
@@ -88,14 +148,14 @@ const ContactForm = ({
       currency: order.currency,
       name: formValues.name,
       order_id: order.id,
-      description: `${HomePage?.razorpay?.title} — ₹${HomePage?.razorpay?.amount}`,
+      description: `${activeConfig?.name || HomePage?.razorpay?.title} — ₹${activeConfig?.fee ?? HomePage?.razorpay?.amount}`,
         notes: {
         name: formValues?.name || "",
         email: formValues?.email || "",
         mobile: formValues?.mobile || "",
         yearsOfPractice: formValues?.yearsOfPractice || "",
-        programm_date: "2026-06-06",
-        page_name: "property-law-masterclass",
+        programm_date: getIsoDate(),
+        page_name: activeConfig?.pageName || "property-law",
         ip_address: ipAddress || "",
         utm_source: getUTM("utm_source") || "",
         utm_medium: getUTM("utm_medium") || "",
@@ -118,12 +178,12 @@ const ContactForm = ({
           mobile: `+91${formValues?.mobile}`,
           yearsOfPractice: formValues?.yearsOfPractice || "",
           amount: order?.amount / 100,
-          programm_date: "2026-06-06",
+          programm_date: getIsoDate(),
           razorpay_order_id: response.razorpay_order_id || "",
           razorpay_payment_id: response.razorpay_payment_id || "",
           razorpay_signature: response.razorpay_signature || "",
           payment_status: "paid",
-          page_name: "property-law-masterclass",
+          page_name: activeConfig?.pageName || "property-law",
           ip_address: ipAddress || "",
           client_key: "vls_law",
           utm_source: getUTM("utm_source"),
@@ -262,9 +322,13 @@ const ContactForm = ({
         >
           <div className={styles.formtitle}>
               <Title
-                title1={"Register"}
-                spantitle={"Now"}
-                subtitle={`( Get Your Legal — Career Roadmap )`}
+                title1={isRegOpen ? "Register" : "Join"}
+                spantitle={isRegOpen ? "Now" : "Waitlist"}
+                subtitle={
+                  isRegOpen
+                    ? `(${activeConfig?.name || "Decoding of Practice"} — ₹${activeConfig?.fee ?? HomePage?.razorpay?.amount})`
+                    : `(${activeConfig?.name || "Decoding of Practice"})`
+                }
               />
             </div>
             {/* <div className={styles.chipWrap}>
@@ -341,10 +405,18 @@ const ContactForm = ({
 
             <div className={`mt-4 d-md-flex justify-content-center`}>
               <Button
-                name={`Claim My Seat for ₹${HomePage?.razorpay?.amount}`}
+                name={
+                  isSubmitting
+                    ? "Submitting..."
+                    : isRegOpen
+                    ? `Claim My Seat for ₹${activeConfig?.fee ?? HomePage?.razorpay?.amount}`
+                    : "Join Waitlist"
+                }
                 type={"submit"}
-                icon={"arrow-right"}
+                icon={isSubmitting ? null : "arrow-right"}
                 iconPosition={"right"}
+                isLoading={isSubmitting}
+                disabled={isSubmitting}
               />
             </div>
 

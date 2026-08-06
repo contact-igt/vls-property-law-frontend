@@ -1,7 +1,7 @@
 import { DynamicIcon } from "lucide-react/dynamic";
 import styles from "./styles.module.css";
 
-const Button = ({ name, scrollToContactForm, icon, iconPosition = "left", isLoading, type, link }) => {
+const Button = ({ name, scrollToContactForm, icon, iconPosition = "left", isLoading, disabled, type, link }) => {
   if (link) {
     return (
       <a href={link} className={styles.commonbtn}>
@@ -27,6 +27,7 @@ const Button = ({ name, scrollToContactForm, icon, iconPosition = "left", isLoad
       type={type || "button"}
       onClick={scrollToContactForm}
       className={styles.commonbtn}
+      disabled={disabled || isLoading}
     >
       {icon && iconPosition === "left" && <DynamicIcon name={icon} size={20} />}
 

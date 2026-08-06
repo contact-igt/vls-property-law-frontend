@@ -1,8 +1,13 @@
 import Title from "@/common/Title";
 import styles from "./styles.module.css";
 import { DynamicIcon } from "lucide-react/dynamic";
+import { programConfig } from "@/constants/Home";
+import { isRegistrationOpen, PRICE_ANNOUNCEMENT_TEXT, DATE_TIME_ANNOUNCEMENT_TEXT } from "@/utils/programStatus";
 
-const FastFact = ({ factdata }) => {
+const FastFact = ({ factdata, config = programConfig }) => {
+  const activeConfig = config || programConfig;
+  const isRegOpen = isRegistrationOpen(activeConfig);
+
   // If factdata is the new problem section object (has cards), render problem layout
   const isProblem = factdata && Array.isArray(factdata.cards);
 
@@ -56,22 +61,35 @@ const FastFact = ({ factdata }) => {
           </div>
           <div className="col-lg-6 mt-5 mt-lg-0">
             <div className="row">
-              {factdata?.map((data, i) => (
-                <div className="col-xxl-6 col-xl-12" key={i}>
-                  <div
-                    className={`d-flex align-items-center  my-3 gap-3 ${styles.factpointcard} `}
-                  >
-                    <div className={styles.cardimg}>
-                      <DynamicIcon
-                        name={data?.icon}
-                        color="#b20a0a"
-                        size={30}
-                      />
+              {factdata?.map((data, i) => {
+                let displayValue = data?.value;
+                if (data?.icon === "calendar-clock" || data?.icon === "calendar") {
+                  displayValue = isRegOpen
+                    ? (activeConfig?.date ? `${activeConfig.date} • ${activeConfig.time}` : data?.value)
+                    : DATE_TIME_ANNOUNCEMENT_TEXT;
+                } else if (data?.icon === "hand-coins" || data?.icon === "banknote" || data?.icon === "indian-rupee") {
+                  displayValue = isRegOpen
+                    ? `₹${activeConfig?.fee || 499} (Early access)`
+                    : PRICE_ANNOUNCEMENT_TEXT;
+                }
+
+                return (
+                  <div className="col-xxl-6 col-xl-12" key={i}>
+                    <div
+                      className={`d-flex align-items-center  my-3 gap-3 ${styles.factpointcard} `}
+                    >
+                      <div className={styles.cardimg}>
+                        <DynamicIcon
+                          name={data?.icon}
+                          color="#b20a0a"
+                          size={30}
+                        />
+                      </div>
+                      <p>{displayValue}</p>
                     </div>
-                    <p>{data?.value}</p>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>

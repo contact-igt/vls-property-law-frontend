@@ -1,8 +1,11 @@
 import Button from "@/common/Button";
 import styles from "./styles.module.css";
 import Title from "@/common/Title";
+import { programConfig } from "@/constants/Home";
+import { getSectionCtaText } from "@/utils/programStatus";
 
-const WhyCourse = ({ scrollToContactForm }) => {
+const WhyCourse = ({ scrollToContactForm, config = programConfig }) => {
+  const activeConfig = config || programConfig;
   return (
     <section className={styles.whycouresec}>
       <div className="container">
@@ -21,7 +24,7 @@ const WhyCourse = ({ scrollToContactForm }) => {
               </p>
 
               <Button
-                name={"Learn More"}
+                name={getSectionCtaText(activeConfig, "Learn More")}
                 scrollToContactForm={scrollToContactForm}
               />
             </div>

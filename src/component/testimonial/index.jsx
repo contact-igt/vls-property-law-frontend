@@ -6,8 +6,11 @@ import Slider from "react-slick";
 import TestimonialCard from "@/common/TestimonialCard";
 import { Popup } from "@/common/Popup";
 import Button from "@/common/Button";
+import { programConfig } from "@/constants/Home";
+import { getSectionCtaText } from "@/utils/programStatus";
 
-const Testimonial = ({ scrollToContactForm }) => {
+const Testimonial = ({ scrollToContactForm, config = programConfig }) => {
+  const activeConfig = config || programConfig;
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedVideo, setSelectedVideo] = useState(null);
 
@@ -131,7 +134,7 @@ const Testimonial = ({ scrollToContactForm }) => {
                <div className="w-100 d-flex justify-content-center mt-5">
           <Button
             scrollToContactForm={scrollToContactForm}
-            name="Enroll Now ₹99"
+            name={getSectionCtaText(activeConfig, `Enroll Now ₹${activeConfig?.fee || 499}`)}
             icon={"calendar-check"}
             icon_color={"#fff"}
             bg_color="rgb(178, 10, 10)"
