@@ -6,8 +6,11 @@ import { useEffect, useState } from "react";
 
 const Response = () => {
   const [userDetail, setuserDeatil] = useState();
-  const { query } = useRouter();
-  const issuccess = query.response === "thank-you";
+  const { pathname, query } = useRouter();
+  const issuccess =
+    pathname === "/thank-you" ||
+    query?.response === "thank-you" ||
+    query?.response === "success";
 
   // useEffect(() => {
   //   setuserDeatil(JSON.parse(localStorage.getItem("PaymentDetails")));
@@ -51,39 +54,75 @@ const Response = () => {
 
         <div className={`text-center ${styles.responseInfo}`}>
           <h5 className={issuccess ? styles.successText : styles.errorText}>
-            {issuccess ? "Payment Successful" : "Payment Failed"}
+            {issuccess
+              ? userDetail?.payment_status === "waitlist"
+                ? "Thank You - Joined Waitlist"
+                : "Payment Successful"
+              : "Payment Failed"}
           </h5>
 
           {issuccess ? (
-            <>
-              <p>
-                Thank you! Your payment has been received successfully. Below
-                are your transaction details:
-              </p>
+            userDetail?.payment_status === "waitlist" ? (
+              <>
+                <p>
+                  Thank you for expressing interest in our masterclass! We have
+                  added you to our priority waitlist. Below are your registration details:
+                </p>
 
-              {userDetail ? (
-                <div className={styles.summaryBox}>
-                  <p>
-                    <strong>Name:</strong> {userDetail?.name || ""}
-                  </p>
-                  <p>
-                    <strong>Email:</strong> {userDetail?.email || "-"}
-                  </p>
-                  <p>
-                    <strong>Mobile:</strong> {userDetail?.mobile || "-"}
-                  </p>
-                  <p>
-                    <strong>Amount:</strong> ₹{userDetail?.amount || "-"}
-                  </p>
-                  <p>
-                    <strong>Transaction ID:</strong>{" "}
-                    {userDetail?.razorpay_payment_id || "Not Available"}
-                  </p>
-                </div>
-              ) : (
-                ""
-              )}
-            </>
+                {userDetail && (
+                  <div className={styles.summaryBox}>
+                    <p>
+                      <strong>Name:</strong> {userDetail?.name || ""}
+                    </p>
+                    <p>
+                      <strong>Email:</strong> {userDetail?.email || "-"}
+                    </p>
+                    <p>
+                      <strong>Mobile:</strong> {userDetail?.mobile || "-"}
+                    </p>
+                    <p>
+                      <strong>Program Date:</strong> {userDetail?.programm_date || "TBA"}
+                    </p>
+                    <p>
+                      <strong>Status:</strong> Waitlist Registered
+                    </p>
+                  </div>
+                )}
+                <p className="mt-3 text-muted">
+                  We will notify you via Email and WhatsApp as soon as the date and time for the next batch are announced.
+                </p>
+              </>
+            ) : (
+              <>
+                <p>
+                  Thank you! Your payment has been received successfully. Below
+                  are your transaction details:
+                </p>
+
+                {userDetail ? (
+                  <div className={styles.summaryBox}>
+                    <p>
+                      <strong>Name:</strong> {userDetail?.name || ""}
+                    </p>
+                    <p>
+                      <strong>Email:</strong> {userDetail?.email || "-"}
+                    </p>
+                    <p>
+                      <strong>Mobile:</strong> {userDetail?.mobile || "-"}
+                    </p>
+                    <p>
+                      <strong>Amount:</strong> ₹{userDetail?.amount || "-"}
+                    </p>
+                    <p>
+                      <strong>Transaction ID:</strong>{" "}
+                      {userDetail?.razorpay_payment_id || "Not Available"}
+                    </p>
+                  </div>
+                ) : (
+                  ""
+                )}
+              </>
+            )
           ) : (
             <p>
               Oops! We couldn’t process your payment. Please try again or call

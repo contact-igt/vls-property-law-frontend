@@ -1,3 +1,20 @@
+export const programConfig = {
+  name: "Property Law · Career Masterclass",
+  descriptor: "Tamil Nadu Practice Focused",
+  category: "Property Law Masterclass",
+  sessionStatus: "announced",
+  date: "Saturday, 6 June 2026",
+  time: "10:00 AM – 1:00 PM IST",
+  classStartAt: "2026-06-06T10:00:00+05:30",
+  duration: "3 Hours",
+  mode: "Live Session",
+  language: "Tamil / English",
+  fee: 499,
+  pageName: "property-law",
+  whatsapp: "+919500025216",
+  phone1: "+919500207811",
+};
+
 export const HomePage = {
   hero_banner: {
     heading: {

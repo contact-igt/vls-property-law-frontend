@@ -12,7 +12,7 @@ export const PropertyLawRegisterQuery = () => {
     },
     {
       onSuccess: () => {
-        enqueueSnackbar("Registered successfully", { variant: "success" });
+        // enqueueSnackbar("Registered successfully", { variant: "success" });
       },
       onError: (error) => {
         const message =

@@ -2,8 +2,11 @@ import Title from "@/common/Title";
 import { DynamicIcon } from "lucide-react/dynamic";
 import styles from "./styles.module.css";
 import Button from "@/common/Button";
+import { programConfig } from "@/constants/Home";
+import { getSectionCtaText } from "@/utils/programStatus";
 
-const WhyVls = ({ whyvlsdata, scrollToContactForm }) => {
+const WhyVls = ({ whyvlsdata, scrollToContactForm, config = programConfig }) => {
+  const activeConfig = config || programConfig;
   return (
     <section className={styles.WhyVlssec}>
       <div className="container">
@@ -24,7 +27,7 @@ const WhyVls = ({ whyvlsdata, scrollToContactForm }) => {
             </div>
 
             <Button
-              name={"Reserve My Seat"}
+              name={getSectionCtaText(activeConfig, "Reserve My Seat")}
               icon={"arrow-right"}
               iconPosition={"right"}
               scrollToContactForm={scrollToContactForm}

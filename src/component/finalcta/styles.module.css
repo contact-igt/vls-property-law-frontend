@@ -121,8 +121,8 @@
 
 /* Trust Badges */
 .trustBadges {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: 16px;
   margin-top: 40px;
   position: relative;
@@ -130,16 +130,18 @@
 }
 
 .badge {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 12px;
-  padding: 18px;
+  padding: 18px 24px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
   transition: all 0.3s ease;
   touch-action: manipulation;
+  width: fit-content;
+  max-width: 100%;
 }
 
 @media (hover: hover) {
@@ -232,7 +234,6 @@
   }
   
   .trustBadges {
-    grid-template-columns: repeat(3, 1fr);
     gap: 14px;
   }
 
@@ -281,16 +282,15 @@
   }
 
   .trustBadges {
-    grid-template-columns: repeat(3, 1fr);
     max-width: 100%;
     gap: 12px;
   }
 
   .badge {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding: 14px;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 18px;
   }
 
   .rightForm {
@@ -366,7 +366,6 @@
   }
 
   .trustBadges {
-    grid-template-columns: 1fr;
     gap: 10px;
     margin-top: 32px;
     width: 100%;
@@ -378,8 +377,8 @@
     align-items: center;
     padding: 14px 16px;
     gap: 12px;
-    width: 100%;
-    min-width: 0;
+    width: fit-content;
+    max-width: 100%;
   }
 
   .badge strong {
